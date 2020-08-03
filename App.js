@@ -1,7 +1,8 @@
-import {login_view} from './ui/login';
+import React, { Component } from 'react';
+import Login from './src/pages/login';
 
 const App: () => React$Node = () => {
-  return login_view;
+  return <Login />;
 };
 
 export default App;
