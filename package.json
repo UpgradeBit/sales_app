@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "font-awesome": "^4.7.0",
+    "mongoose": "^5.9.27",
     "react": "16.13.1",
     "react-native": "0.63.2",
     "react-native-elements": "^2.1.0",
+    "react-native-logs": "^2.2.1",
     "react-native-vector-icons": "^7.0.0"
   },
   "devDependencies": {

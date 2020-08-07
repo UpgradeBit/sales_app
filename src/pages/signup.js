@@ -1,19 +1,17 @@
-import React, {Component} from 'react';
-
-import {
+const React = require('react');
+const {Component} = require('react');
+const {
     StyleSheet,
-    View,
-    TextInput,
     ScrollView,
-    Alert,
-
-} from 'react-native';
-import {
+} = require('react-native');
+const {
     Button,
     Input,
-    Text,
     Icon,
-} from 'react-native-elements';
+} = require('react-native-elements');
+
+const signUp = require('../../core/actions').signUp;
+const getErrorState = require('../../core/util/getters').getErrorState;
 
 export default class Signup extends Component {
     render() {
@@ -25,6 +23,9 @@ export default class Signup extends Component {
                     placeholder="Email"
                     keyboardType={'email-address'}
                     autoCorrect={false}
+                    onChangeText={value => this.setState({email: value})}
+                    errorMessage={this.state?.err?.email}
+                    renderErrorMessage={getErrorState('email', this.state?.err || {})}
                     leftIcon={
                         <Icon
                             name="user"
@@ -37,6 +38,10 @@ export default class Signup extends Component {
                 <Input
                     placeholder="Password"
                     secureTextEntry={true}
+                    passwordRules
+                    onChangeText={value => this.setState({password: value})}
+                    errorMessage={this.state?.err?.password}
+                    renderErrorMessage={getErrorState('password', this.state?.err || {})}
                     leftIcon={
                         <Icon
                             name="lock"
@@ -48,6 +53,10 @@ export default class Signup extends Component {
                 <Input
                     placeholder="докажите Password"
                     secureTextEntry={true}
+                    passwordRules
+                    onChangeText={value => this.setState({passwordConfirm: value})}
+                    errorMessage={this.state?.err?.passwordConfirm}
+                    renderErrorMessage={getErrorState('passwordConfirm', this.state?.err || {})}
                     leftIcon={
                         <Icon
                             name="lock"
@@ -58,6 +67,11 @@ export default class Signup extends Component {
                 />
                 {/*Кнопка входа*/}
                 <Button
+                    raised
+                    onPress={() => {
+                        const err = signUp(this.state);
+                        this.setState({err});
+                    }}
                     title="Sign up"
                 />
 
