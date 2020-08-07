@@ -6,6 +6,7 @@ import {
     TextInput,
     ScrollView,
     Alert,
+
 } from 'react-native';
 import {
     Button,
@@ -59,13 +60,21 @@ export default class Login extends Component {
                 />
                 {/*Иконки снизу*/}
                 <View style={styles.iconRow}>
-                    <Icon reverse name="vk" type="font-awesome" color="#597da3"/>
+                    <Icon
+                        reverse name="vk"
+                        type="font-awesome"
+                        color="#597da3"/>
                     <Icon
                         reverse
                         name="google-plus-square"
                         type="font-awesome"
                         color="#d34836"/>
                 </View>
+                <Button
+                    title="Create Account"
+                    type="clear"
+                    //buttonStyle={}
+                />
             </ScrollView>
         );
     }
