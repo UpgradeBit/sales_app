@@ -59,12 +59,7 @@ export default class Login extends Component {
                 />
                 {/*Иконки снизу*/}
                 <View style={styles.iconRow}>
-                    <Icon
-                        reverse
-                        name="vk"
-                        type="font-awesome"
-                        color="#597da3"
-                    />
+                    <Icon reverse name="vk" type="font-awesome" color="#597da3"/>
                     <Icon
                         reverse
                         name="google-plus-square"
