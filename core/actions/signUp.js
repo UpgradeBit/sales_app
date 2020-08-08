@@ -1,5 +1,5 @@
 const logger = require('../util/log').logger;
-const User = require('../domain').User;
+const config = require('../config/config');
 
 /**
  * SignUp  to app
@@ -27,17 +27,24 @@ function SignUp(options){
     logger.debug('Password: ' + options?.password);
     logger.debug('Confirmation: ' + options?.passwordConfirm);
 
-    const newUser = new User({email: options.email,
-                                password: options.password});
+    const fetch_options = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: options.email,
+          password: options.password
+        })
+    };
 
-    logger.debug('new User: ', newUser);
+    const url = config.server + '/users/signup';
 
-    // newUser.save((err, user) => {
-    //     if (err)
-    //         logger.error('Error saving user: ', err);
-    //
-    //     logger.debug('User saved: ', user.email);
-    // });
+    logger.debug('URL: ', url);
+
+    fetch(url, fetch_options)
+        .catch(err => logger.debug('Error sending info: ' + err));
 }
 
 module.exports = {

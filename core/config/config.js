@@ -3,16 +3,22 @@
  * @prop {Config} prod
  */
 const config = {
-    dev: {
+    development: {
         mongoose_connection_string: 'mongodb://localhost:27017/Upgrade',
+        host: 'localhost',
+        port: '4000',
+        server: 'https://1d557592fa4a.ngrok.io'
     },
-    prod: {
-        mongoose_connection_string: ''
+    production: {
+        mongoose_connection_string: '',
+        host: '',
+        port: '',
+        server: ''
     }
 }
 
 if (process.env.NODE_ENV === undefined) {
-    process.env.NODE_ENV = 'dev';
+    process.env.NODE_ENV = 'development';
 }
 
 console.log('Loading config, ENV:', process.env.NODE_ENV);
