@@ -45,8 +45,9 @@ export default class Login extends Component {
                     placeholder="Password"
                     secureTextEntry={true}
                     onChangeText={value => this.setState({password: value})}
-                    errorMessage={this.state?.err?.password}
-                    renderErrorMessage={getErrorState('password', this.state?.err || {})}
+                    errorMessage={this.state?.err?.password || this.state?.err?.wrongData}
+                    renderErrorMessage={getErrorState('password', this.state?.err || {}) ||
+                                        getErrorState('wrongData', this.state?.err || {})}
                     leftIcon={
                         <Icon
                             name="lock"

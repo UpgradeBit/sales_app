@@ -12,14 +12,15 @@ sales_app.get('/', (req, res) => {
 });
 
 sales_app.post('/users/signup', jsonParser, (req, res) => {
-   console.log('body: ', req.body);
-   const newUser = new User({email: req.body.email,
-                                password: req.body.password});
+   const options = {email: req.body.email,
+       password: req.body.password};
 
-   newUser.save((err, user) => {
+    const newUser = new User(options);
+
+   newUser.save((err, _) => {
        if (err)
        {
-           logger.debug(err);
+           logger.error(err);
            res.status(400);
            res.end();
        }else{
@@ -27,6 +28,18 @@ sales_app.post('/users/signup', jsonParser, (req, res) => {
            res.end();
        }
    })
+});
+
+sales_app.post('/users/login', jsonParser, (req, res) => {
+    User.findOne({email: req.body.email}, (err, user) => {
+        if (err)
+            logger.error(err);
+
+        if (!user)
+            res.status(401).end();
+        else if (user.password === req.body.password)
+            res.status(200).end();
+    });
 });
 
 sales_app.listen(config.port, config.host, () => {
