@@ -24,8 +24,9 @@ export default class Signup extends Component {
                     keyboardType={'email-address'}
                     autoCorrect={false}
                     onChangeText={value => this.setState({email: value})}
-                    errorMessage={this.state?.err?.email}
-                    renderErrorMessage={getErrorState('email', this.state?.err || {})}
+                    errorMessage={this.state?.err?.email || this.state?.err?.userExists}
+                    renderErrorMessage={getErrorState('email', this.state?.err || {}) ||
+                                        getErrorState('userExists', this.state?.err || {})}
                     leftIcon={
                         <Icon
                             name="user"
@@ -67,10 +68,10 @@ export default class Signup extends Component {
                 />
                 {/*Кнопка входа*/}
                 <Button
-                    raised
                     onPress={() => {
-                        const err = signUp(this.state);
-                        this.setState({err});
+                        signUp(this.state, err => {
+                            this.setState({err});
+                        });
                     }}
                     title="Sign up"
                 />

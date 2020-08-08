@@ -5,8 +5,9 @@ const logger = require('../util/log').logger;
  * @param {Object} options
  * @param {string} options.email - users email
  * @param {string} options.password - users password
+ * @param {function} done
  */
-function login(options){
+function login(options, done){
     const errors = {};
 
     errors['email'] = !options?.email? "Email address can't be empty": null;
@@ -15,7 +16,7 @@ function login(options){
     logger.debug('Email: ' + options?.email);
     logger.debug('Password: ' + options?.password);
 
-    return errors;
+    done(errors);
 }
 
 module.exports = {

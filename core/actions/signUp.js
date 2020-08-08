@@ -7,44 +7,57 @@ const config = require('../config/config');
  * @param {string} options.email - users email
  * @param {string} options.password - users password
  * @param {string} options.passwordConfirm - confirmation of password
+ * @param {function} done
  */
-function SignUp(options){
+function SignUp(options, done){
     const errors = {};
 
     errors['email'] = !options?.email? "Email address can't be empty": null;
     errors['password'] = !options?.password? "Password can't be empty": null;
     errors['passwordConfirm'] = !options?.passwordConfirm? "Password confirmation can't be empty": null;
 
-    if (errors.email && errors.password && errors.passwordConfirm)
-        return errors;
+    if (errors.email || errors.password || errors.passwordConfirm)
+        done(errors);
     else if (options?.password !== options?.passwordConfirm)
     {
         errors['passwordMismatch'] = "Passwords doesn't match";
-        return errors;
+        done(errors);
     }
+    else{
+        logger.debug('Email: ' + options?.email);
+        logger.debug('Password: ' + options?.password);
+        logger.debug('Confirmation: ' + options?.passwordConfirm);
 
-    logger.debug('Email: ' + options?.email);
-    logger.debug('Password: ' + options?.password);
-    logger.debug('Confirmation: ' + options?.passwordConfirm);
+        const fetch_options = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: options.email,
+                password: options.password
+            })
+        };
 
-    const fetch_options = {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: options.email,
-          password: options.password
-        })
-    };
+        const url = config.server + '/users/signup';
 
-    const url = config.server + '/users/signup';
+        logger.debug('URL: ', url);
 
-    logger.debug('URL: ', url);
+        fetch(url, fetch_options)
+            .then(res => {
+                if (res.status === 400)
+                {
+                    logger.debug('User already exists');
+                    errors['userExists'] = 'User already exists';
+                }
 
-    fetch(url, fetch_options)
-        .catch(err => logger.debug('Error sending info: ' + err));
+                done(errors);
+            })
+            .catch(err => {
+                logger.debug('Error sending info: ' + err);
+            });
+    }
 }
 
 module.exports = {

@@ -5,7 +5,10 @@
  * @return {boolean}
  */
 function getErrorState(messageType, err){
-    return !!err[messageType];
+    if (err.hasOwnProperty(messageType))
+        return !!err[messageType]
+
+    return false;
 }
 
 module.exports = {

@@ -3,7 +3,7 @@ import Login from './src/pages/login';
 import Signup from "./src/pages/signup";
 
 const App: () => React$Node = () => {
-  return <Signup />;
+  return <Login />;
 };
 
 export default App;

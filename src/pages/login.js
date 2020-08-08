@@ -59,8 +59,9 @@ export default class Login extends Component {
                 <Button
                     raised
                     onPress={() => {
-                        const err = login(this.state);
-                        this.setState({err});
+                        login(this.state, err => {
+                            this.setState({err});
+                        });
                     }}
 
                     title="Log in"
