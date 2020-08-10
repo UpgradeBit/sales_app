@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
     //Стиль текста сверху
     textIntro: {
         textAlign: 'center',
+        marginBottom: 10
     },
     //Стиль кнопки забыли пароль
     alignRight: {
