@@ -7,7 +7,7 @@ const config = {
         mongoose_connection_string: 'mongodb://localhost:27017/Upgrade',
         host: 'localhost',
         port: '4000',
-        server: 'https://1d557592fa4a.ngrok.io'
+        server: 'https://348a01b508fe.ngrok.io'
     },
     production: {
         mongoose_connection_string: '',

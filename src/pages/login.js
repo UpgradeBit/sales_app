@@ -1,3 +1,5 @@
+import {logger} from "react-native-logs";
+
 const React = require('react');
 const {Component} = require('react');
 const {
@@ -18,6 +20,8 @@ const getErrorState = require('../../core/util/getters').getErrorState;
 export default class Login extends Component {
 
     render() {
+        const {navigate} = this.props.navigation;
+
         return (
             <ScrollView style={styles.scroll}>
                 {/*Текст сверху*/}
@@ -88,7 +92,7 @@ export default class Login extends Component {
                 <Button
                     title="Create Account"
                     type="clear"
-                    //buttonStyle={}
+                    onPress={() => navigate('Signup')}
                 />
             </ScrollView>
         );

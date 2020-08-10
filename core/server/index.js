@@ -7,10 +7,6 @@ const sales_app = express();
 const jsonParser = express.json();
 const User = require('../domain').User;
 
-sales_app.get('/', (req, res) => {
-    res.send('Hello World!')
-});
-
 sales_app.post('/users/signup', jsonParser, (req, res) => {
    const options = {email: req.body.email,
        password: req.body.password};
