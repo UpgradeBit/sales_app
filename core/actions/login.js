@@ -1,5 +1,10 @@
 const logger = require('../util/log').logger;
 const config = require('../config/config');
+import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
+
+GoogleSignin.configure({
+    webClientId: '602987445566-t0ndnt8142rssr0rjtd5mc1hle0rgng8.apps.googleusercontent.com'
+});
 
 /**
  * Login to app
@@ -52,6 +57,28 @@ function login(options, done){
     }
 }
 
+function loginGoogle(){
+    GoogleSignin.hasPlayServices()
+        .catch(err => logger.error(err));
+
+    GoogleSignin.signIn()
+        .then(userInfo => {
+            logger.debug('User info: ' + userInfo);
+        })
+        .catch(err => {
+            if (err.code === statusCodes.SIGN_IN_CANCELLED) {
+                logger.error(err);
+            } else if (err.code === statusCodes.IN_PROGRESS) {
+                logger.error(err);
+            } else if (err.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+                logger.error(err);
+            } else {
+                logger.error(err);
+            }
+        });
+}
+
 module.exports = {
-    login
+    login,
+    loginGoogle
 }

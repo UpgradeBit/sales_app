@@ -14,7 +14,7 @@ const {
     Icon,
     } = require('react-native-elements');
 
-const login = require('../../core/actions').login;
+const {login, loginGoogle} = require('../../core/actions').login;
 const getErrorState = require('../../core/util/getters').getErrorState;
 
 export default class Login extends Component {
@@ -87,7 +87,8 @@ export default class Login extends Component {
                         reverse
                         name="google-plus-square"
                         type="font-awesome"
-                        color="#d34836"/>
+                        color="#d34836"
+                        onPress={() => {loginGoogle()}}/>
                 </View>
                 <Button
                     title="Create Account"
