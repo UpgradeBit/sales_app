@@ -4,10 +4,10 @@ import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
 import VKLogin from 'react-native-vkontakte-login';
 
 GoogleSignin.configure({
-    webClientId: '602987445566-jem28mveou4a4dkleatssgqd1us13mve.apps.googleusercontent.com'
+    webClientId: config.webClientId
 });
 
-VKLogin.initialize(7564311);
+VKLogin.initialize(config.vkAppId);
 
 /**
  * Login to app
@@ -65,7 +65,7 @@ function loginGoogle() {
 
     GoogleSignin.signIn()
         .then(userInfo => {
-            logger.debug('User info: ' + userInfo);
+            logger.debug('User info: ', userInfo);
         })
         .catch(err => {
             if (err.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -81,12 +81,15 @@ function loginGoogle() {
 }
 
 async function loginVK() {
-    const isLoggedIn = await VKLogin.isLoggedIn()
+    VKLogin.isLoggedIn()
         .then(userInfo => {
-            logger.debug('User info: ' + userInfo);
+            logger.debug('User info: ', userInfo);
         });
 
-    const auth = await VKLogin.login(['friends', 'email', 'photos'])
+    VKLogin.login(['friends', 'email', 'photos'])
+        .then(user => {
+            logger.debug('Info', user);
+        })
         .catch(err => logger.error(err));
 
 }
