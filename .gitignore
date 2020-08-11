@@ -26,8 +26,8 @@ DerivedData
 build/
 .idea
 .gradle
-local.properties
-gradle.properties
+android/local.properties
+android/gradle.properties
 *.iml
 
 # node.js
@@ -58,4 +58,3 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
-android/gradle.properties
