@@ -81,9 +81,13 @@ function loginGoogle() {
 }
 
 async function loginVK() {
+    const isLoggedIn = await VKLogin.isLoggedIn()
+        .then(userInfo => {
+            logger.debug('User info: ' + userInfo);
+        });
 
-    const auth = await VKLogin.login(['friends', 'email', 'photos']);
-    console.log(auth.access_token);
+    const auth = await VKLogin.login(['friends', 'email', 'photos'])
+        .catch(err => logger.error(err));
 
 }
 
