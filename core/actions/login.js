@@ -1,10 +1,13 @@
 const logger = require('../util/log').logger;
 const config = require('../config/config');
-import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
+import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
+import VKLogin from 'react-native-vkontakte-login';
 
 GoogleSignin.configure({
     webClientId: '602987445566-jem28mveou4a4dkleatssgqd1us13mve.apps.googleusercontent.com'
 });
+
+VKLogin.initialize(7564311);
 
 /**
  * Login to app
@@ -13,18 +16,18 @@ GoogleSignin.configure({
  * @param {string} options.password - users password
  * @param {function} done
  */
-function login(options, done){
+function login(options, done) {
     const errors = {};
 
-    errors['email'] = !options?.email? "Email address can't be empty": null;
-    errors['password'] = !options?.password? "Password can't be empty": null;
+    errors['email'] = !options?.email ? "Email address can't be empty" : null;
+    errors['password'] = !options?.password ? "Password can't be empty" : null;
 
     logger.debug('Email: ' + options?.email);
     logger.debug('Password: ' + options?.password);
 
-    if(errors.email || errors.password)
+    if (errors.email || errors.password)
         done(errors);
-    else{
+    else {
         const fetch_options = {
             method: 'POST',
             headers: {
@@ -43,8 +46,7 @@ function login(options, done){
 
         fetch(url, fetch_options)
             .then(res => {
-                if (res.status === 401)
-                {
+                if (res.status === 401) {
                     logger.debug('Wrong data');
                     errors['wrongData'] = 'Incorrect login or password';
                 }
@@ -57,7 +59,7 @@ function login(options, done){
     }
 }
 
-function loginGoogle(){
+function loginGoogle() {
     GoogleSignin.hasPlayServices()
         .catch(err => logger.error(err));
 
@@ -78,7 +80,16 @@ function loginGoogle(){
         });
 }
 
+async function loginVK() {
+
+    const auth = await VKLogin.login(['friends', 'email', 'photos']);
+    console.log(auth.access_token);
+
+}
+
+
 module.exports = {
     login,
-    loginGoogle
+    loginGoogle,
+    loginVK
 }

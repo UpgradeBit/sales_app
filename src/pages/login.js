@@ -14,7 +14,7 @@ const {
     Icon,
     } = require('react-native-elements');
 
-const {login, loginGoogle} = require('../../core/actions').login;
+const {login, loginGoogle, loginVK} = require('../../core/actions').login;
 const getErrorState = require('../../core/util/getters').getErrorState;
 
 export default class Login extends Component {
@@ -82,7 +82,8 @@ export default class Login extends Component {
                     <Icon
                         reverse name="vk"
                         type="font-awesome"
-                        color="#597da3"/>
+                        color="#597da3"
+                        onPress={() => {loginVK()}}/>
                     <Icon
                         reverse
                         name="google-plus-square"
