@@ -3,7 +3,7 @@ const config = require('../config/config');
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 
 GoogleSignin.configure({
-    webClientId: '602987445566-t0ndnt8142rssr0rjtd5mc1hle0rgng8.apps.googleusercontent.com'
+    webClientId: '602987445566-jem28mveou4a4dkleatssgqd1us13mve.apps.googleusercontent.com'
 });
 
 /**
