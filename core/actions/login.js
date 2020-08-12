@@ -1,5 +1,6 @@
 const logger = require('../util/log').logger;
 const config = require('../config/config');
+const bcrypt = require('../security');
 import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
 import VKLogin from 'react-native-vkontakte-login';
 
@@ -35,8 +36,7 @@ function login(options, done) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                email: options.email,
-                password: options.password
+                email: options.email
             })
         };
 
@@ -47,11 +47,21 @@ function login(options, done) {
         fetch(url, fetch_options)
             .then(res => {
                 if (res.status === 401) {
-                    logger.debug('Wrong data');
-                    errors['wrongData'] = 'Incorrect login or password';
+                    logger.debug('User not found');
+                    errors['wrongEmail'] = 'User is not registered yet';
+                    done(errors);
+                }else{
+                    res.json().then(data => {
+                        if(bcrypt.compareSync(options.password, data.hash))
+                            logger.debug('Authorized');
+                        else
+                        {
+                            logger.debug('Wrong password');
+                            errors['wrongPassword'] = 'wrong password';
+                        }
+                        done(errors);
+                    });
                 }
-
-                done(errors);
             })
             .catch(err => {
                 logger.error('Error sending info: ' + err);

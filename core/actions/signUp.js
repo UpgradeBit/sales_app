@@ -1,5 +1,6 @@
 const logger = require('../util/log').logger;
 const config = require('../config/config');
+const bcrypt = require('../security');
 
 /**
  * SignUp  to app
@@ -28,6 +29,9 @@ function SignUp(options, done){
         logger.debug('Password: ' + options?.password);
         logger.debug('Confirmation: ' + options?.passwordConfirm);
 
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(options.password, salt);
+
         const fetch_options = {
             method: 'POST',
             headers: {
@@ -36,7 +40,7 @@ function SignUp(options, done){
             },
             body: JSON.stringify({
                 email: options.email,
-                password: options.password
+                password: hash
             })
         };
 

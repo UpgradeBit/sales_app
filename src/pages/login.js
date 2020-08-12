@@ -34,8 +34,9 @@ export default class Login extends Component {
                     keyboardType={'email-address'}
                     autoCorrect={false}
                     onChangeText={value => this.setState({email: value})}
-                    errorMessage={this.state?.err?.email}
-                    renderErrorMessage={getErrorState('email', this.state?.err || {})}
+                    errorMessage={this.state?.err?.email || this.state?.err?.wrongEmail}
+                    renderErrorMessage={getErrorState('email', this.state?.err || {}) ||
+                                        getErrorState('wrongEmail', this.state?.err || {})}
                     leftIcon={
                         <Icon
                             name="user"
@@ -49,9 +50,9 @@ export default class Login extends Component {
                     placeholder="Password"
                     secureTextEntry={true}
                     onChangeText={value => this.setState({password: value})}
-                    errorMessage={this.state?.err?.password || this.state?.err?.wrongData}
+                    errorMessage={this.state?.err?.password || this.state?.err?.wrongPassword}
                     renderErrorMessage={getErrorState('password', this.state?.err || {}) ||
-                                        getErrorState('wrongData', this.state?.err || {})}
+                                        getErrorState('wrongPassword', this.state?.err || {})}
                     leftIcon={
                         <Icon
                             name="lock"

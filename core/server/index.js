@@ -33,8 +33,12 @@ sales_app.post('/users/login', jsonParser, (req, res) => {
 
         if (!user)
             res.status(401).end();
-        else if (user.password === req.body.password)
-            res.status(200).end();
+        else{
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200);
+            res.json({hash: user.password});
+            res.end();
+        }
     });
 });
 

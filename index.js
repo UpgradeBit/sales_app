@@ -1,6 +1,7 @@
 /**
  * @format
  */
+require('./core/security');
 
 import {AppRegistry} from 'react-native';
 import App from './App';
