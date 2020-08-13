@@ -1,4 +1,3 @@
-import {logger} from "react-native-logs";
 import {Alert, Button, ListView} from 'react-native';
 
 const React = require('react');
