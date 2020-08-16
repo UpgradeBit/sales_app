@@ -8,7 +8,7 @@ const config = {
         host: 'localhost',
         port: '4000',
         server: 'https://fcc192406aaf.ngrok.io',
-        webClientId: '602987445566-jem28mveou4a4dkleatssgqd1us13mve.apps.googleusercontent.com',
+        webClientId: '360209451662-7gce3n54t693lse8845am3e12klhen5p.apps.googleusercontent.com',
         vkAppId: 7564311
     },
     production: {

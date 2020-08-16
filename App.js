@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, Button } from 'react-native';
-import Login from './src/pages/login';
-import Signup from "./src/pages/signup";
-import Main from "./src/pages/main";
+import Login from './src/screens/login';
+import Signup from "./src/screens/signup";
+import Main from "./src/screens/main";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Icon } from 'react-native-elements';
