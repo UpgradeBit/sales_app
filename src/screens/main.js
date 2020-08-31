@@ -35,6 +35,14 @@ const kindsOfShops = [
     }
 ];
 
+const Shops = [
+    {
+        name: "Макдональдс",
+        imageUrl: {uri: "http://sc-globalcity.ru/sites/default/files/offers/800x800_site_mccombo_bm.jpg"},
+        kinds: ["Bar", "Restaurant", "Cafe"]
+    }
+]
+
 export default class Main extends Component {
     constructor() {
         super();
