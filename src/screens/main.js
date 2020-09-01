@@ -10,10 +10,6 @@ const {Text, ButtonGroup, Tile, ListItem, Card, Icon} = require('react-native-el
 const FireBase = require('../../core/db/firebase').FireBase;
 const fireBase = new FireBase();
 
-// fireBase.getAll("organizations/", organizations => {
-//   console.log('org: ', organizations);
-// })
-
 const kindsOfShops = [
     {
         id: 1,
@@ -52,10 +48,19 @@ export default class Main extends Component {
         };
 
         this.updateIndex = this.updateIndex.bind(this);
+        this.getOrganizations = this.getOrganizations.bind(this);
+
+        this.getOrganizations();
     }
 
     updateIndex(selectedIndex) {
         this.setState({selectedIndex});
+    }
+
+    getOrganizations(){
+        fireBase.getAll("organizations", organizations => {
+            this.setState({organizations});
+        });
     }
 
     render() {
@@ -128,62 +133,63 @@ export default class Main extends Component {
                 <ScrollView
                 style={{flex: 1}}>
                     {
-                        fireBase.getAll("organizations/", organizations => (
-                            organizations.map(organization => (
-                                <View style={{borderColor: "black"}}>
-                                    <ListItem
-                                        key={0}
-                                        leftAvatar={{source: {uri: organization.imageUrl.uri}}}
-                                        rightIcon={<Icon
-                                            name="bars"
-                                            type="font-awesome"
-                                        />}
-                                        title={organization.name}
-                                        subtitle={"0.8 км"}
+                        this.state?.organizations?.map((organization, i) =>
+                            <View
+                                key={i}
+                                style={{borderColor: "black"}}>
+                                <ListItem
+                                    key={0}
+                                    leftAvatar={{source: {uri: organization.imageUrl.uri}}}
+                                    rightIcon={<Icon
+                                        name="bars"
+                                        type="font-awesome"
+                                    />}
+                                    title={organization.name}
+                                    subtitle={"0.8 км"}
+                                />
+                                <ImageBackground source={{uri: organization.imageUrl.uri}}
+                                                 style={{width: "100%", height: 350}}>
+                                    <FlatList
+                                        data={kindsOfShops}
+                                        horizontal={true}
+                                        renderItem={({item}) =>
+                                            <View
+                                                style={{
+                                                    padding: 4
+                                                }}>
+                                                <Text style={{
+                                                    height: 20,
+                                                    borderColor: "#b0b0b0",
+                                                    borderRadius: 4,
+                                                    textAlignVertical: 'center',
+                                                    borderWidth: 15,
+                                                    textAlign: 'center',}}
+                                                >{item.name}</Text>
+                                            </View>
+                                        }
+                                        style={{
+                                            alignSelf: 'flex-end',
+                                            paddingTop: 4
+                                        }}
                                     />
-                                    <ImageBackground source={{uri: organization.imageUrl.uri}}
-                                                     style={{width: "100%", height: 350}}>
-                                        <FlatList
-                                            data={kindsOfShops}
-                                            horizontal={true}
-                                            renderItem={({item}) =>
-                                                <View
-                                                    style={{
-                                                        padding: 4
-                                                    }}>
-                                                    <Text style={{
-                                                        height: 20,
-                                                        borderColor: "#b0b0b0",
-                                                        borderRadius: 4,
-                                                        textAlignVertical: 'center',
-                                                        borderWidth: 15,
-                                                        textAlign: 'center',}}
-                                                    >{item.name}</Text>
-                                                </View>
-                                            }
-                                            style={{
-                                                alignSelf: 'flex-end',
-                                                paddingTop: 4
-                                            }}
-                                        />
-                                        <View style={{
-                                            alignSelf: 'stretch',
-                                            margin: 20,
-                                        }}>
-                                            <Text style={{
-                                                fontSize: 20,
-                                                fontWeight: 'bold'
-                                            }}>Акция на бургер</Text>
-                                            <Text style={{
-                                                fontSize: 18,
-                                                color: "#5d5c5c",
-                                                fontWeight: 'bold'
-                                            }}>27.08.2020 - 31.12.2020</Text>
-                                        </View>
-                                    </ImageBackground>
-                                </View>
-                            ))
-                        ))
+                                    <View style={{
+                                        alignSelf: 'stretch',
+                                        margin: 20,
+                                    }}>
+                                        <Text style={{
+                                            fontSize: 20,
+                                            fontWeight: 'bold'
+                                        }}>Акция на бургер</Text>
+                                        <Text style={{
+                                            fontSize: 18,
+                                            color: "#5d5c5c",
+                                            fontWeight: 'bold'
+                                        }}>27.08.2020 - 31.12.2020</Text>
+                                    </View>
+                                </ImageBackground>
+                            </View>
+
+                        )
                     }
                 </ScrollView>
             </View>
