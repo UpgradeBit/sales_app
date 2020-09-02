@@ -2,6 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 const Tab = createBottomTabNavigator();
 import Main from '../screens/main';
+import AddPost from "../screens/addPost";
 import { Icon } from 'react-native-elements';
 
 function HomeTabs(){

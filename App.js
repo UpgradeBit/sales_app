@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { View, Button, Text } from 'react-native';
-import {StackNavigator} from "./src/navigation/ScreenNavigator";
+import StackNavigator from "./src/navigation/ScreenNavigator";
+import {NavigationContainer} from "@react-navigation/native";
 
-const stackNavigator = StackNavigator();
 const App: () => React$Node = () => {
   return (
-      stackNavigator
+      <NavigationContainer>
+        <StackNavigator/>
+      </NavigationContainer>
   );
 };
 

@@ -1,56 +1,69 @@
-import {NavigationContainer} from "@react-navigation/native";
 import React from "react";
+const {Component} = require('react');
 import {HomeTabs} from "./tabNavigator";
+import AddPost from '../screens/addPost';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Icon } from 'react-native-elements';
 
 const Stack = createStackNavigator();
 
-function StackNavigator(){
-    return (
-        <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen
-                    name="Home"
-                    component={HomeTabs}
-                    options={options}/>
-            </Stack.Navigator>
-        </NavigationContainer>
-    )
+export default class StackNavigator extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+                <Stack.Navigator>
+                    <Stack.Screen
+                        name="Home"
+                        component={HomeTabs}
+                        options={generateOptions("Home")}/>
+                    <Stack.Screen name="addingPost"
+                                  component={AddPost}
+                                  options={generateOptions("AddPost")}/>
+                </Stack.Navigator>
+        )
+    }
 }
 
-const options = {
-    title: "Акцион",
-    headerStyle: {
-        backgroundColor: '#ffffff',
-    },
-    headerTintColor: '#000000',
-    headerTitleStyle: {
-        fontWeight: "normal",
-        textAlign: "center"
-    },
-    headerLeftContainerStyle:{
-        marginLeft: 10
-    },
-    headerRightContainerStyle:{
-        marginRight: 10
-    },
-    headerLeft: () => (
-        <Icon
-            color="gray"
-            name="refresh"
-            type="material"
-            onPress={() => alert('refresh')}
-        />
-    ),
-    headerRight: () => (
-        <Icon
-            color="gray"
-            name="filter"
-            type="material"
-            onPress={() => alert('Filter')}
-        />
-    ),
+function generateOptions(tab){
+    return {
+        title: "Акцион",
+        headerStyle: {
+            backgroundColor: '#ffffff',
+        },
+        headerTintColor: '#000000',
+        headerTitleStyle: {
+            fontWeight: "normal",
+            textAlign: "center"
+        },
+        headerLeftContainerStyle:{
+            marginLeft: 10
+        },
+        headerRightContainerStyle:{
+            marginRight: 10
+        },
+        headerRight: () => (
+            <Icon
+                color="gray"
+                name="filter"
+                type="material"
+                onPress={() => alert('Filter')}
+            />
+        ),
+        headerLeft: () => (
+            <Icon
+                color="gray"
+                name={tab === "Home"? "refresh": "undo"}
+                type="material"
+                onPress={() => {
+                    if (tab === 'Home')
+                        alert('refresh');
+                    // else
+                    //     NavigationActions.navigate('Home', {resetPopLib: true});
+                }}
+            />
+        )
+    }
 }
-
-module.exports.StackNavigator = StackNavigator;

@@ -1,8 +1,8 @@
 import {Image} from "react-native-elements";
 import {Button, FlatList, SafeAreaView} from 'react-native';
 import {HeaderTitle} from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { LayoutAnimation, RefreshControl } from 'react-native';
+import ImagePicker from "react-native-image-picker";
 
 const logger = require('../../core/util/log').logger;
 const React = require('react');
@@ -60,13 +60,47 @@ export default class Main extends Component {
     }
 
     getOrganizations(){
-        fireBase.getAll("organizations", organizations => {
+        fireBase.get("organizations", organizations => {
             this.setState({organizations});
         });
     }
 
-    render() {
+    chooseImage(){
+        let options = {
+            title: 'Select Image',
+            customButtons: [
+                { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+            ],
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            },
+        };
 
+        ImagePicker.showImagePicker(options, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+                alert(response.customButton);
+            } else {
+                this.props.navigation.navigate('addingPost', {uri: `data:image/jpeg;base64,${response.data}`});
+            }
+        });
+    }
+
+    render() {
+        if (this.props?.route?.resetPopLib)
+            this.setState({dontPopLib: false});
+
+        if (this.props?.route?.name === 'AddPost' && !this.state.dontPopLib){
+            this.chooseImage();
+            this.setState({dontPopLib: true});
+        }
+
+        LayoutAnimation.easeInEaseOut();
         const choiceButton1 = () => <Text>Все акции</Text>;
         const choiceButton2 = () => <Text>Мои подписки</Text>;
 
@@ -74,12 +108,6 @@ export default class Main extends Component {
 
         const {selectedIndex} = this.state
 
-        const Item = ({name, imageUrl, kinds}) => (
-            <ImageBackground source={imageUrl}
-            style={{width: 20, height: 20}}>
-
-            </ImageBackground>
-        );
 
         return (
             <View style={{flex: 1}}>

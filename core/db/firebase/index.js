@@ -13,11 +13,11 @@ class FireBase{
     }
 
     /**
-     * Getting all instances from particular collection
+     * Getting  instances from particular collection
      * @param {string} ref name of collection
      * @param {function} done
      */
-    getAll(ref, done){
+    get(ref, done){
         this.dataBase
             .ref(ref)
             .once('value', snap => {
@@ -31,6 +31,23 @@ class FireBase{
                 done(organizationsList);
             })
     }
+
+    /**
+     * Saving data to firebase
+     * @param {string} ref
+     * @param {Object} data
+     * @param {function} done
+     */
+    setEntity(ref, data, done){
+        this.dataBase
+            .ref(ref)
+            .set(data)
+            .then(() => {
+                console.log('Entity saved by ref: ', ref);
+                done();
+            })
+    }
+
 }
 
 module.exports ={
