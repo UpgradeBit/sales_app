@@ -47,6 +47,7 @@ export default class Main extends Component {
 
         this.state = {
             selectedIndex: 0,
+            dontPopLib: false
         };
 
         this.updateIndex = this.updateIndex.bind(this);
@@ -95,7 +96,9 @@ export default class Main extends Component {
         if (this.props?.route?.resetPopLib)
             this.setState({dontPopLib: false});
 
-        if (this.props?.route?.name === 'AddPost' && !this.state.dontPopLib){
+        console.log('Here: ', this.state.dontPopLib);
+
+        if (this.props?.route?.name === 'AddPost' && this.state.dontPopLib !== undefined && !this.state.dontPopLib){
             this.chooseImage();
             this.setState({dontPopLib: true});
         }

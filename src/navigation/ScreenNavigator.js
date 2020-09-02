@@ -14,56 +14,61 @@ export default class StackNavigator extends Component {
 
     render() {
         return (
-                <Stack.Navigator>
+                <Stack.Navigator
+                    initialRouteName="Home">
                     <Stack.Screen
                         name="Home"
                         component={HomeTabs}
-                        options={generateOptions("Home")}/>
+                        options={this.generateOptions("Home")}/>
                     <Stack.Screen name="addingPost"
                                   component={AddPost}
-                                  options={generateOptions("AddPost")}/>
+                                  options={({ navigation }) => {
+                                      return this.generateOptions('AddPost', navigation.navigate)
+                                  }}/>
                 </Stack.Navigator>
         )
     }
-}
 
-function generateOptions(tab){
-    return {
-        title: "Акцион",
-        headerStyle: {
-            backgroundColor: '#ffffff',
-        },
-        headerTintColor: '#000000',
-        headerTitleStyle: {
-            fontWeight: "normal",
-            textAlign: "center"
-        },
-        headerLeftContainerStyle:{
-            marginLeft: 10
-        },
-        headerRightContainerStyle:{
-            marginRight: 10
-        },
-        headerRight: () => (
-            <Icon
-                color="gray"
-                name="filter"
-                type="material"
-                onPress={() => alert('Filter')}
-            />
-        ),
-        headerLeft: () => (
-            <Icon
-                color="gray"
-                name={tab === "Home"? "refresh": "undo"}
-                type="material"
-                onPress={() => {
-                    if (tab === 'Home')
-                        alert('refresh');
-                    // else
-                    //     NavigationActions.navigate('Home', {resetPopLib: true});
-                }}
-            />
-        )
+    generateOptions(tab, navigate){
+        return {
+            title: "Акцион",
+            headerStyle: {
+                backgroundColor: '#ffffff',
+            },
+            headerTintColor: '#000000',
+            headerTitleStyle: {
+                fontWeight: "normal",
+                textAlign: "center"
+            },
+            headerLeftContainerStyle:{
+                marginLeft: 10
+            },
+            headerRightContainerStyle:{
+                marginRight: 10
+            },
+            headerRight: () => (
+                <Icon
+                    color="gray"
+                    name="filter"
+                    type="material"
+                    onPress={() => alert('Filter')}
+                />
+            ),
+            headerLeft: () => (
+                <Icon
+                    color="gray"
+                    name={tab === "Home"? "refresh": "undo"}
+                    type="material"
+                    onPress={() => {
+                        if (tab === 'Home')
+                            alert('refresh');
+                        else{
+                            console.log('Redirecting Home')
+                            navigate('Home', {resetPopLib: true});
+                        }
+                    }}
+                />
+            )
+        }
     }
 }

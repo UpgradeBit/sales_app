@@ -1,4 +1,3 @@
-import ImagePicker from 'react-native-image-picker';
 import {ScrollView} from "react-native";
 const React = require('react');
 const {Component} = require('react');
@@ -13,7 +12,6 @@ export default class AddPost extends Component {
     constructor(props) {
         super(props);
     }
-
 
     render() {
         return (
