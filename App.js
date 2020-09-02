@@ -1,58 +1,11 @@
 import React, { Component } from 'react';
-import { View, Button } from 'react-native';
-import Login from './src/screens/login';
-import Signup from "./src/screens/signup";
-import Main from "./src/screens/main";
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Icon } from 'react-native-elements';
+import { View, Button, Text } from 'react-native';
+import {StackNavigator} from "./src/navigation/ScreenNavigator";
 
-const Stack = createStackNavigator();
-
+const stackNavigator = StackNavigator();
 const App: () => React$Node = () => {
   return (
-      <NavigationContainer>
-        <Stack.Navigator>
-            <Stack.Screen
-                name="Sales"
-                component={Main}
-                  options={{
-                      title: "Акцион",
-                      headerStyle: {
-                          backgroundColor: '#ffffff',
-                      },
-                      headerTintColor: '#000000',
-                      headerTitleStyle: {
-                          fontWeight: "normal",
-                          textAlign: "center"
-                      },
-                      headerLeftContainerStyle:{
-                          marginLeft: 10
-                      },
-                      headerRightContainerStyle:{
-                          marginRight: 10
-                      },
-                      headerLeft: () => (
-                          <Icon
-                              color="gray"
-                              name="refresh"
-                              type="material"
-                              onPress={() => alert('refresh')}
-                          />
-                      ),
-                      headerRight: () => (
-                          <Icon
-                              color="gray"
-                              name="filter"
-                              type="material"
-                              onPress={() => alert('Filter')}
-                          />
-                      ),
-                  }}/>
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Signup" component={Signup} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      stackNavigator
   );
 };
 

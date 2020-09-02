@@ -1,6 +1,8 @@
 import {Image} from "react-native-elements";
 import {Button, FlatList, SafeAreaView} from 'react-native';
 import {HeaderTitle} from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 const logger = require('../../core/util/log').logger;
 const React = require('react');
