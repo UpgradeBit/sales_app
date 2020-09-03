@@ -17,14 +17,9 @@ export default class StackNavigator extends Component {
                 <Stack.Navigator
                     initialRouteName="Home">
                     <Stack.Screen
-                        name="Home"
+                        name="HomeScreen"
                         component={HomeTabs}
                         options={this.generateOptions("Home")}/>
-                    <Stack.Screen name="addingPost"
-                                  component={AddPost}
-                                  options={({ navigation }) => {
-                                      return this.generateOptions('AddPost', navigation.navigate)
-                                  }}/>
                 </Stack.Navigator>
         )
     }
@@ -63,8 +58,8 @@ export default class StackNavigator extends Component {
                         if (tab === 'Home')
                             alert('refresh');
                         else{
-                            console.log('Redirecting Home')
-                            navigate('Home', {resetPopLib: true});
+                            console.log('Redirecting Home');
+                            navigate('Home');
                         }
                     }}
                 />

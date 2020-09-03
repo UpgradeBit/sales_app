@@ -12,7 +12,7 @@ function HomeTabs(){
             tabBarOptions={options.tabBarOptions}>
             <Tab.Screen name="Home" component={Main}/>
             <Tab.Screen name="Search" component={Main}/>
-            <Tab.Screen name="AddPost" component={Main}/>
+            <Tab.Screen name="AddPost" component={AddPost}/>
             <Tab.Screen name="Map" component={Main}/>
             <Tab.Screen name="Profile" component={Main}/>
         </Tab.Navigator>

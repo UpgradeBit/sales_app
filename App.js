@@ -4,7 +4,6 @@ import StackNavigator from "./src/navigation/ScreenNavigator";
 import {NavigationContainer} from "@react-navigation/native";
 import { createStackNavigator } from '@react-navigation/stack';
 
-
 const App: () => React$Node = () => {
   return (
       <NavigationContainer>

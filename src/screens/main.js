@@ -42,18 +42,18 @@ const Shops = [
 ]
 
 export default class Main extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             selectedIndex: 0,
-            dontPopLib: false
         };
 
         this.updateIndex = this.updateIndex.bind(this);
         this.getOrganizations = this.getOrganizations.bind(this);
 
         this.getOrganizations();
+
     }
 
     updateIndex(selectedIndex) {
@@ -66,43 +66,7 @@ export default class Main extends Component {
         });
     }
 
-    chooseImage(){
-        let options = {
-            title: 'Select Image',
-            customButtons: [
-                { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
-            ],
-            storageOptions: {
-                skipBackup: true,
-                path: 'images',
-            },
-        };
-
-        ImagePicker.showImagePicker(options, (response) => {
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
-                alert(response.customButton);
-            } else {
-                this.props.navigation.navigate('addingPost', {uri: `data:image/jpeg;base64,${response.data}`});
-            }
-        });
-    }
-
     render() {
-        if (this.props?.route?.resetPopLib)
-            this.setState({dontPopLib: false});
-
-        console.log('Here: ', this.state.dontPopLib);
-
-        if (this.props?.route?.name === 'AddPost' && this.state.dontPopLib !== undefined && !this.state.dontPopLib){
-            this.chooseImage();
-            this.setState({dontPopLib: true});
-        }
-
         LayoutAnimation.easeInEaseOut();
         const choiceButton1 = () => <Text>Все акции</Text>;
         const choiceButton2 = () => <Text>Мои подписки</Text>;
@@ -110,7 +74,6 @@ export default class Main extends Component {
         const choiceButtons = [{element: choiceButton1}, {element: choiceButton2}];
 
         const {selectedIndex} = this.state
-
 
         return (
             <View style={{flex: 1}}>
