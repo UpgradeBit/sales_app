@@ -36,9 +36,8 @@ class FireBase{
      * Saving data to firebase
      * @param {string} ref
      * @param {Object} data
-     * @param {function} done
      */
-    setEntity(ref, data, done){
+    setEntity (ref, data){
         this.dataBase
             .ref(ref)
             .set(data)

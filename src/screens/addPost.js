@@ -1,4 +1,4 @@
-import { ScrollView, TextInput } from 'react-native'
+import { Dimensions, ScrollView, TextInput } from 'react-native'
 
 const React = require('react')
 const { Component } = require('react')
@@ -53,12 +53,13 @@ export default class AddPost extends Component {
         if (!this.state.uri || !this.state.orgName) {
             alert('Bad request')
         } else {
-            fireBase.setEntity(`organizations/${this.state.orgName}`, {
+            fireBase.setEntity(`posts`, {
                 imageUrl: {
                     uri: this.state.uri,
                 },
                 kind: ['1', '2', '3'],
-                name: this.state.orgName,
+                orgName: this.state.orgName,
+                text: this.state.text,
             })
         }
     }
@@ -69,18 +70,18 @@ export default class AddPost extends Component {
         return (
             <ScrollView
                 style={{ flex: 1 }}>
-                <View style={{ flex: 1, flexDirection: 'row', margin: 20 }}>
-                    <Image
-                        style={{ width: 100, height: 100, marginRight: 10 }}
-                        onPress={() => {this.chooseImage()}}
-                        PlaceholderContent={<ActivityIndicator/>}
-                        source={image}/>
-                    
+                <View style={{ flex: 1, flexDirection: 'column', margin: 20 }}>
                     <Input
-                        placeholder="Organization name"
+                        placeholder="Enter organization name"
                         onChangeText={(text) => {
                             this.setState({ orgName: text })
                         }}/>
+                        
+                    <Image
+                        style={{ width: "100%", height:  Dimensions.get('window').width, marginRight: 10 }}
+                        onPress={() => {this.chooseImage()}}
+                        PlaceholderContent={<ActivityIndicator/>}
+                        source={image}/>
                 </View>
                 
                 <View style={{
@@ -89,17 +90,31 @@ export default class AddPost extends Component {
                     margin: 20,
                 }}>
                     <TextInput
-                        placeholder={'Post text'}
+                        placeholder={'Enter post text'}
                         multiline={true}
+                        onChangeText={(text) => {
+                            this.setState({ text: text })
+                        }}
                     />
                 </View>
                 
                 <View style={{ padding: 20 }}>
                     <Button title="Add post"
-                            onPress={() => {this.savePost()}}/>
+                            onPress={() => {
+                                if (this.checkOrgName(this.state.orgName))
+                                    this.savePost()
+                                else
+                                    console.log("Wrong organization name")
+                                    // alert("Wrong organization name")
+                            }}/>
                 </View>
             </ScrollView>
         )
         
+    }
+    
+    checkOrgName (orgName) {
+        let re = /[\sA-Za-zа-яА-Я0-9_-]{1,25}/
+        return re.test(orgName)
     }
 }
