@@ -6,7 +6,8 @@ const userSchema = new Schema({
         type: String,
         unique: true
     },
-    password: String
+    password: String,
+    favouriteCompanies: [String]
 });
 
 module.exports.User = mongoose.model('User', userSchema);

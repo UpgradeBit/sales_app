@@ -1,14 +1,23 @@
 import React, { Component } from 'react';
-import { View, Button, Text } from 'react-native';
-import StackNavigator from "./src/navigation/ScreenNavigator";
-import {NavigationContainer} from "@react-navigation/native";
+import { View, Button } from 'react-native';
+import Login from './src/pages/login';
+import Signup from "./src/pages/signup";
+
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import Company_profile from './src/pages/company_profile';
+
+const Stack = createStackNavigator();
 
 const App: () => React$Node = () => {
   return (
-      <NavigationContainer>
-              <StackNavigator/>
-      </NavigationContainer>
+      <Company_profile/>
+      /*<NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Signup" component={Signup} />
+        </Stack.Navigator>
+      </NavigationContainer>*/
   );
 };
 
